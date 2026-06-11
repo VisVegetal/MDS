@@ -1,0 +1,59 @@
+{% extends "courses/base.html" %}
+{% block content %}
+
+<div class="flex flex-col md:flex-row md:items-center justify-between mb-8 pb-4 border-b border-gray-100">
+    <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight mb-4 md:mb-0">Available Courses</h1>
+    
+    <form method="get" class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+        <input type="text" name="q" placeholder="Search title or instructor..." value="{{ query }}" 
+               class="border border-gray-300 rounded-xl px-4 py-2 w-full sm:w-64 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+        
+        <select name="category" class="border border-gray-300 rounded-xl px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+            <option value="">All categories</option>
+            {% for cat in categories %}
+            <option value="{{ cat.pk }}">{{ cat.name }}</option>
+            {% endfor %}
+        </select>
+        
+        <button type="submit" class="bg-gray-900 text-white font-medium px-5 py-2 rounded-xl hover:bg-gray-800 transition shadow-sm">
+            Filter
+        </button>
+    </form>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {% for course in courses %}
+    <div class="border border-gray-100 rounded-2xl p-6 bg-gradient-to-br from-white to-gray-50/50 shadow-xs hover:shadow-md hover:border-indigo-100 transition flex flex-col justify-between">
+        <div>
+            <div class="flex justify-between items-start mb-3">
+                <a href="{% url 'category_courses' course.category.pk %}" class="text-xs font-semibold uppercase tracking-wider bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-md hover:bg-indigo-100 transition">
+                    {{ course.category.name }}
+                </a>
+                <span class="text-xs font-medium text-gray-400 bg-gray-100 px-2 py-0.5 rounded">
+                    Year {{ course.year }}
+                </span>
+            </div>
+            
+            <a href="{% url 'course_detail' course.pk %}" class="block text-xl font-bold text-gray-900 hover:text-indigo-600 transition mb-2">
+                {{ course.title }}
+            </a>
+            <p class="text-sm text-gray-500 mb-4">👨‍🏫 Instructor: <span class="font-medium text-gray-700">{{ course.instructor }}</span></p>
+        </div>
+        
+        <div class="flex justify-between items-center pt-4 border-t border-gray-100 mt-auto">
+            <span class="text-sm font-semibold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">
+                ✨ {{ course.credits }} Credits
+            </span>
+            <a href="{% url 'course_detail' course.pk %}" class="text-sm font-medium text-indigo-600 hover:text-indigo-800 flex items-center gap-1 transition">
+                View details &rarr;
+            </a>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-span-full text-center py-12 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
+        <p class="text-gray-500 text-lg">No courses found matching your criteria.</p>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

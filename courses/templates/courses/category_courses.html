@@ -1,0 +1,14 @@
+{% extends "courses/base.html" %}
+{% block content %}
+<h1>Courses in Category: {{ category.name }}</h1>
+{% for course in courses %}
+<div style="margin-bottom: 15px;">
+    <a href="{% url 'course_detail' course.pk %}">{{ course.title }}</a>
+    <div>Instructor: {{ course.instructor }} | Year: {{ course.year }} | Credits: {{ course.credits }}</div>
+</div>
+{% empty %}
+<p>No courses found in this category.</p>
+{% endfor %}
+<hr>
+<a href="{% url 'course_list' %}">Back to Catalog</a>
+{% endblock %}

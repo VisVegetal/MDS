@@ -1,0 +1,26 @@
+{% extends "courses/base.html" %}
+{% block content %}
+
+<div class="max-w-xl mx-auto">
+    <h1 class="text-3xl font-extrabold text-gray-900 mb-2">{{ action }} Course</h1>
+    <p class="text-gray-500 mb-6">Fill in the fields below to update the catalog database.</p>
+
+    <form method="post" class="space-y-5">
+        {% csrf_token %}
+        
+        <div class="space-y-4 [&_p]:flex [&_p]:flex-col [&_p]:gap-1.5 [&_label]:font-semibold [&_label]:text-sm [&_label]:text-gray-700 [&_input]:border [&_input]:border-gray-300 [&_input]:rounded-xl [&_input]:px-4 [&_input]:py-2 [&_input]:focus:ring-2 [&_input]:focus:ring-indigo-500 [&_select]:border [&_select]:border-gray-300 [&_select]:rounded-xl [&_select]:px-4 [&_select]:py-2 [&_textarea]:border [&_textarea]:border-gray-300 [&_textarea]:rounded-xl [&_textarea]:p-4">
+            {{ form.as_p }}
+        </div>
+
+        <div class="flex items-center space-x-3 pt-4 border-t border-gray-100">
+            <button type="submit" class="bg-indigo-600 text-white font-semibold px-6 py-2.5 rounded-xl hover:bg-indigo-700 shadow-sm transition">
+                Save Changes
+            </button>
+            <a href="{% url 'course_list' %}" class="text-gray-500 hover:text-gray-700 font-medium px-4 py-2.5 transition">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
