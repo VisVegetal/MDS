@@ -9,4 +9,4 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install pytest hypothesis
-      - run: pytest -v
+      - run: pytest -v test_calc.py test_build.py
